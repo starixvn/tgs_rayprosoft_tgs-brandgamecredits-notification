@@ -12,9 +12,9 @@ data:
         }
       },
       "BrandGameCreditsSetting": {
-        "BrandGameCreditsClientBaseUrl": "https://brand-gamecredits/",
-        "NotificationContactsClientBaseUrl": "https://notification-contacts/",
-        "NotificationEmailClientBaseUrl": "https://notification-email/"
+        "BrandGameCreditsClientBaseUrl": "http://brand-gamecredits/",
+        "NotificationContactsClientBaseUrl": "http://notification-contacts/",
+        "NotificationEmailClientBaseUrl": "http://notification-email/"
       },
       "EmailSettings": {
         "NotificationLockingSecs": 30,
