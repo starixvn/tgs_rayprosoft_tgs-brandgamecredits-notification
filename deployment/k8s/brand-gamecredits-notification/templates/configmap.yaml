@@ -10,6 +10,14 @@ data:
         "LogLevel": {
           "Default": "Warning"
         }
+      },
+      "EmailSettings": {
+        "NotificationLockingSecs": 30,
+        "EmailLockingHours": 3,
+        "BlindCarbonCopies": [
+          "info@pegagaming.com",
+          "hank.wu@rayprosoft.com"
+        ]
       }
     }
   otel-collector-config.yaml: |
