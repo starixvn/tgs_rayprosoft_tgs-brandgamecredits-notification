@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.59.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="PhoenixToolkits.MessageQueue" Version="1.0.3" />
+    <PackageReference Include="PhoenixToolkits.MessageQueue.Nats" Version="1.0.6" />
+    <PackageReference Include="PhoenixToolkits.Protobuf.ExtendTypes" Version="0.0.6" />
+    <PackageReference Include="Tgs.BrandGameCredits.Client" Version="0.0.6" />
+    <PackageReference Include="Tgs.BrandGameCredits.Handler.Client" Version="0.0.3" />
+    <PackageReference Include="Tgs.Notification.Contacts.Client" Version="0.0.1" />
+    <PackageReference Include="Tgs.Notification.Email.Client" Version="0.0.3" />
+    <PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
+using NSubstitute;
+using Tgs.BrandGameCredits.Client;
+using Tgs.BrandGameCredits.Notification.Core.ApplicationServices;
+using Tgs.Email.Client;
+using Tgs.ServiceUtility;
+
+namespace Tgs.BrandGameCredits.Notification.Core.UnitTest.ApplicationServices;
+
+public class EmailCommandServiceUnitTest
+{
+    private static readonly string[] _BlindCarbonCopies = ["hank.wu@rayprosoft.com"];
+    private static readonly string[] _Recipients = ["tst@rayprosoft.com"];
+
+    [Fact]
+    public async void Locked_Return_True()
+    {
+        var fakeLogger = NullLogger<EmailCommandService>.Instance;
+        var fakeOptions = Options.Create<EmailSettingsOptions>(new EmailSettingsOptions
+        {
+            NotificationLockingSecs = 30,
+            EmailLockingHours = 3,
+            BlindCarbonCopies = _BlindCarbonCopies
+        });
+        var fakeEmailLockingRepository = Substitute.For<IEmailLockingRepository>();
+        var fakeNotificationEmailClient = Substitute.For<INotificationEmailClient>();
+
+        var command = new EmailCommand(
+            BrandCode: "GPI",
+            Recipients: _Recipients,
+            Subject: "TestSubject",
+            Content: "TestContent");
+
+        _ = fakeEmailLockingRepository.LockedAsync(
+            code: Arg.Is(command.BrandCode),
+            cancellationToken: Arg.Any<CancellationToken>())
+            .Returns(true);
+
+        var service = new EmailCommandService(
+            fakeLogger,
+            fakeOptions,
+            fakeEmailLockingRepository,
+            fakeNotificationEmailClient);
+
+        await service.ExecuteAsync(command);
+
+        _ = fakeNotificationEmailClient
+            .Received(1)
+            .PublishTextAsync(
+            recipients: Arg.Any<IEnumerable<string>>(),
+            subject: Arg.Is(command.Subject),
+            content: Arg.Is(command.Content),
+            carbonCopies: Arg.Any<IEnumerable<string>>(),
+            blindCarbonCopies: Arg.Any<IEnumerable<string>>(),
+            cancellationToken: Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async void Locked_Return_False()
+    {
+        var fakeLogger = NullLogger<EmailCommandService>.Instance;
+        var fakeOptions = Options.Create<EmailSettingsOptions>(new EmailSettingsOptions
+        {
+            NotificationLockingSecs = 30,
+            EmailLockingHours = 3,
+            BlindCarbonCopies = _BlindCarbonCopies
+        });
+        var fakeEmailLockingRepository = Substitute.For<IEmailLockingRepository>();
+        var fakeNotificationEmailClient = Substitute.For<INotificationEmailClient>();
+
+        var command = new EmailCommand(
+            BrandCode: "GPI",
+            Recipients: _Recipients,
+            Subject: "TestSubject",
+            Content: "TestContent");
+
+        _ = fakeEmailLockingRepository.LockedAsync(
+            code: Arg.Is(command.BrandCode),
+            cancellationToken: Arg.Any<CancellationToken>())
+            .Returns(false);
+
+        var service = new EmailCommandService(
+            fakeLogger,
+            fakeOptions,
+            fakeEmailLockingRepository,
+            fakeNotificationEmailClient);
+
+        await service.ExecuteAsync(command);
+
+        _ = fakeNotificationEmailClient
+            .Received(0)
+            .PublishTextAsync(
+            recipients: Arg.Any<IEnumerable<string>>(),
+            subject: Arg.Is(command.Subject),
+            content: Arg.Is(command.Content),
+            carbonCopies: Arg.Any<IEnumerable<string>>(),
+            blindCarbonCopies: Arg.Any<IEnumerable<string>>(),
+            cancellationToken: Arg.Any<CancellationToken>());
+    }
+}
