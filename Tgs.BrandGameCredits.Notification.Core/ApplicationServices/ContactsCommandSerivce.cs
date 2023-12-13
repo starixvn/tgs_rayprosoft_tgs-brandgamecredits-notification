@@ -23,7 +23,7 @@ internal class ContactsCommandSerivce(
             {
                 if (!recipients.Add(contact.Email))
                 {
-                    logger.LogInformation("This mailbox is added repeatedly.({email})", contact.Email);
+                    logger.LogInformation("LogOn:{logOn}  Message:This mailbox is added repeatedly.({email})", DateTime.Now.ToString("o"), contact.Email);
                 }
             }
         }
@@ -38,7 +38,7 @@ internal class ContactsCommandSerivce(
             {
                 if (!recipients.Add(contact.Email))
                 {
-                    logger.LogInformation("This mailbox is added repeatedly.({email})", contact.Email);
+                    logger.LogInformation("LogOn:{logOn}  Message:This mailbox is added repeatedly.({email})", DateTime.Now.ToString("o"), contact.Email);
                 }
             }
         }
@@ -53,14 +53,14 @@ internal class ContactsCommandSerivce(
             {
                 if (!recipients.Add(contact.Email))
                 {
-                    logger.LogInformation("This mailbox is added repeatedly.({email})", contact.Email);
+                    logger.LogInformation("LogOn:{logOn}  Message:This mailbox is added repeatedly.({email})", DateTime.Now.ToString("o"), contact.Email);
                 }
             }
         }
 
         if (recipients.Count == 0)
         {
-            logger.LogWarning("This brand({code}) has no contact notifications set up", command.BrandCode);
+            logger.LogWarning("LogOn:{logOn}  Message:This {code} has no contact notifications set up", DateTime.Now.ToString("o"), command.BrandCode);
             return;
         }
 
