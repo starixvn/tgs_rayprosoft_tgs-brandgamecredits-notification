@@ -11,6 +11,11 @@ data:
           "Default": "Warning"
         }
       },
+      "BrandGameCreditsSetting": {
+        "BrandGameCreditsClientBaseUrl": "https://brand-gamecredits/",
+        "NotificationContactsClientBaseUrl": "https://notification-contacts/",
+        "NotificationEmailClientBaseUrl": "https://notification-email/"
+      },
       "EmailSettings": {
         "NotificationLockingSecs": 30,
         "EmailLockingHours": 3,
