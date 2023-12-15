@@ -36,7 +36,7 @@ public class NotificationCommandServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
-        var gameCredit = new GameCredit(
+        var gameCredit = new BrandGameCredit(
             ResellerId: Guid.Parse("b5a2c708-ab70-4316-9f4d-5d2ad0e77460"),
             ResellerCode: "TGS",
             LicenseeId: Guid.Parse("66c5fef5-217b-4929-9a08-72c2479a8f4e"),
@@ -53,7 +53,7 @@ public class NotificationCommandServiceUnitTest
             CreditUsedPer: 32.6733m,
             CreditAvailable: 68m,
             CreditAvailablePer: 67.3267m,
-            GameCreditRiskTypes.NormalRisk,
+            BrandGameCreditRiskTypes.NormalRisk,
             CreatedOn: DateTimeOffset.Parse("2023-12-06T09:19:50.010516+00:00"),
             UpdatedOn: DateTimeOffset.Parse("2023-12-07T10:38:10.350982+00:00"));
         _ = fakeBrandGameCreditsClient.GameCreditGetCurrentAsync(
@@ -106,7 +106,7 @@ public class NotificationCommandServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
-        var gameCredit = new GameCredit(
+        var gameCredit = new BrandGameCredit(
             ResellerId: Guid.Parse("b5a2c708-ab70-4316-9f4d-5d2ad0e77460"),
             ResellerCode: "TGS",
             LicenseeId: Guid.Parse("66c5fef5-217b-4929-9a08-72c2479a8f4e"),
@@ -123,7 +123,7 @@ public class NotificationCommandServiceUnitTest
             CreditUsedPer: 60m,
             CreditAvailable: 400m,
             CreditAvailablePer: 40m,
-            GameCreditRiskTypes.LowRisk,
+            BrandGameCreditRiskTypes.LowRisk,
             CreatedOn: DateTimeOffset.Parse("2023-12-06T09:19:50.010516+00:00"),
             UpdatedOn: DateTimeOffset.Parse("2023-12-07T10:38:10.350982+00:00"));
         _ = fakeBrandGameCreditsClient.GameCreditGetCurrentAsync(
@@ -176,7 +176,7 @@ public class NotificationCommandServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
-        var gameCredit = new GameCredit(
+        var gameCredit = new BrandGameCredit(
             ResellerId: Guid.Parse("b5a2c708-ab70-4316-9f4d-5d2ad0e77460"),
             ResellerCode: "TGS",
             LicenseeId: Guid.Parse("66c5fef5-217b-4929-9a08-72c2479a8f4e"),
@@ -193,7 +193,7 @@ public class NotificationCommandServiceUnitTest
             CreditUsedPer: 80m,
             CreditAvailable: 200m,
             CreditAvailablePer: 20m,
-            GameCreditRiskTypes.ModerateRisk,
+            BrandGameCreditRiskTypes.ModerateRisk,
             CreatedOn: DateTimeOffset.Parse("2023-12-06T09:19:50.010516+00:00"),
             UpdatedOn: DateTimeOffset.Parse("2023-12-07T10:38:10.350982+00:00"));
         _ = fakeBrandGameCreditsClient.GameCreditGetCurrentAsync(
@@ -246,7 +246,7 @@ public class NotificationCommandServiceUnitTest
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
-        var gameCredit = new GameCredit(
+        var gameCredit = new BrandGameCredit(
             ResellerId: Guid.Parse("b5a2c708-ab70-4316-9f4d-5d2ad0e77460"),
             ResellerCode: "TGS",
             LicenseeId: Guid.Parse("66c5fef5-217b-4929-9a08-72c2479a8f4e"),
@@ -263,7 +263,7 @@ public class NotificationCommandServiceUnitTest
             CreditUsedPer: 95m,
             CreditAvailable: 50m,
             CreditAvailablePer: 5m,
-            GameCreditRiskTypes.HighRisk,
+            BrandGameCreditRiskTypes.HighRisk,
             CreatedOn: DateTimeOffset.Parse("2023-12-06T09:19:50.010516+00:00"),
             UpdatedOn: DateTimeOffset.Parse("2023-12-07T10:38:10.350982+00:00"));
         _ = fakeBrandGameCreditsClient.GameCreditGetCurrentAsync(

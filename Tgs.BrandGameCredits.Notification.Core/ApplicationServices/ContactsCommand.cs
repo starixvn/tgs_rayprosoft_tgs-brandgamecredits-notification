@@ -9,4 +9,4 @@ public record ContactsCommand(
     string LicenseeCode,
     Guid BrandId,
     string BrandCode,
-    GameCreditRiskTypes RiskType);
+    BrandGameCreditRiskTypes RiskType);

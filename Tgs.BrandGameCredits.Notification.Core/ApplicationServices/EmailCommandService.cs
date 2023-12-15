@@ -50,6 +50,5 @@ internal class EmailCommandService(
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
-
     }
 }

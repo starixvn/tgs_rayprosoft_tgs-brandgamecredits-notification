@@ -25,7 +25,7 @@ public class ContactsCommandSerivceUnitTest
             LicenseeCode: "TGS",
             BrandId: Guid.Parse("4e86719f-243f-46f6-b010-5c758b7285af"),
             BrandCode: "GPI",
-            GameCreditRiskTypes.LowRisk);
+            BrandGameCreditRiskTypes.LowRisk);
 
         var brandContact = new EmailContactGet(
             ResellerId: Guid.Parse("b5a2c708-ab70-4316-9f4d-5d2ad0e77460"),
@@ -115,7 +115,7 @@ public class ContactsCommandSerivceUnitTest
             LicenseeCode: "TGS",
             BrandId: Guid.Parse("4e86719f-243f-46f6-b010-5c758b7285af"),
             BrandCode: "GPI",
-            GameCreditRiskTypes.LowRisk);
+            BrandGameCreditRiskTypes.LowRisk);
 
         _ = fakeNotificationContactsClient.EmailBrandGetAsync(
             code: Arg.Is(command.BrandCode),

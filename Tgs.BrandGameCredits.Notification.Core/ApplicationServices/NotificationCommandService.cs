@@ -37,7 +37,7 @@ internal class NotificationCommandService(
             command.BrandCode,
             gameCredit.CreditRiskType.ToString());
 
-        if (gameCredit.CreditRiskType == GameCreditRiskTypes.NormalRisk)
+        if (gameCredit.CreditRiskType == BrandGameCreditRiskTypes.NormalRisk)
         {
             return;
         }

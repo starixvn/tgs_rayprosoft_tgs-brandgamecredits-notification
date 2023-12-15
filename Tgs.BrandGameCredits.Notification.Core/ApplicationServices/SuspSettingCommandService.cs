@@ -18,9 +18,9 @@ internal class SuspSettingCommandService(
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
-        var notification = command.RiskType == GameCreditRiskTypes.LowRisk
+        var notification = command.RiskType == BrandGameCreditRiskTypes.LowRisk
         ? suspSetting.LowNotification
-            : command.RiskType == GameCreditRiskTypes.ModerateRisk
+            : command.RiskType == BrandGameCreditRiskTypes.ModerateRisk
             ? suspSetting.ModerateNotification
             : suspSetting.HighNotification;
 
@@ -33,8 +33,8 @@ internal class SuspSettingCommandService(
             command: new EmailCommand(
                 BrandCode: command.BrandCode,
                 Recipients: command.Recipients,
-                Subject: notification["EmailSubject"]!.ToString(),
-                Content: notification["EmailContent"]!.ToString()),
+                Subject: notification.EmailSubject,
+                Content: notification.EmailContent),
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
