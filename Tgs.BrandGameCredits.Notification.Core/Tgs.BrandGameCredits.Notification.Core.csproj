@@ -12,8 +12,8 @@
     <PackageReference Include="PhoenixToolkits.MessageQueue" Version="1.0.3" />
     <PackageReference Include="PhoenixToolkits.MessageQueue.Nats" Version="1.0.6" />
     <PackageReference Include="PhoenixToolkits.Protobuf.ExtendTypes" Version="0.0.6" />
-    <PackageReference Include="Tgs.BrandGameCredits.Client" Version="0.0.7" />
-    <PackageReference Include="Tgs.BrandGameCredits.Handler.Client" Version="0.0.3" />
+    <PackageReference Include="Tgs.BrandGameCredits.Client" Version="0.0.8" />
+    <PackageReference Include="Tgs.BrandGameCredits.Handler.Client" Version="0.0.4" />
     <PackageReference Include="Tgs.Notification.Contacts.Client" Version="0.0.1" />
     <PackageReference Include="Tgs.Notification.Email.Client" Version="0.0.3" />
     <PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
