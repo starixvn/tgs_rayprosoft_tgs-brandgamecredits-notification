@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
-using Tgs.BrandGameCredits.Client;
+using Tgs.BrandGameCredits.Common;
 using Tgs.BrandGameCredits.Notification.Core.ApplicationServices;
 using Tgs.Email.Client;
-using Tgs.ServiceUtility;
 
 namespace Tgs.BrandGameCredits.Notification.Core.UnitTest.ApplicationServices;
 
@@ -33,12 +27,14 @@ public class EmailCommandServiceUnitTest
 
         var command = new EmailCommand(
             BrandCode: "GPI",
+            RiskType: BrandGameCreditRiskTypes.LowRisk,
             Recipients: _Recipients,
             Subject: "TestSubject",
             Content: "TestContent");
 
         _ = fakeEmailLockingRepository.LockedAsync(
             code: Arg.Is(command.BrandCode),
+            riskType: Arg.Is(command.RiskType),
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(true);
 
@@ -76,12 +72,14 @@ public class EmailCommandServiceUnitTest
 
         var command = new EmailCommand(
             BrandCode: "GPI",
+            RiskType: BrandGameCreditRiskTypes.LowRisk,
             Recipients: _Recipients,
             Subject: "TestSubject",
             Content: "TestContent");
 
         _ = fakeEmailLockingRepository.LockedAsync(
             code: Arg.Is(command.BrandCode),
+            riskType: Arg.Is(command.RiskType),
             cancellationToken: Arg.Any<CancellationToken>())
             .Returns(false);
 

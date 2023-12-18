@@ -18,6 +18,7 @@ internal class EmailCommandService(
     {
         if (!await lockingRepository.LockedAsync(
             code: command.BrandCode,
+            riskType: command.RiskType,
             cancellationToken: cancellationToken)
             .ConfigureAwait(false))
         {
@@ -47,6 +48,7 @@ internal class EmailCommandService(
 
             await lockingRepository.UnlockAsync(
                 code: command.BrandCode,
+                riskType: command.RiskType,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }

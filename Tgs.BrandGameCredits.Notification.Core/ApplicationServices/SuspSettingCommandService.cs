@@ -32,6 +32,7 @@ internal class SuspSettingCommandService(
         await service.ExecuteAsync(
             command: new EmailCommand(
                 BrandCode: command.BrandCode,
+                RiskType: command.RiskType,
                 Recipients: command.Recipients,
                 Subject: notification.EmailSubject,
                 Content: notification.EmailContent),
