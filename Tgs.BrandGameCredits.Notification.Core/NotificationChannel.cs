@@ -1,4 +1,5 @@
-﻿using System.Threading.Channels;
+﻿using System.Diagnostics;
+using System.Threading.Channels;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,8 @@ internal class NotificationChannel(
     ILogger<NotificationChannel> logger,
     IServiceProvider serviceProvider) : IDisposable
 {
+    private static readonly ActivitySource _ActivitySource = new(name: typeof(NotificationChannel).FullName!);
+
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     private readonly Channel<NotificationCommand> _channel = Channel.CreateUnbounded<NotificationCommand>(
@@ -127,12 +130,17 @@ internal class NotificationChannel(
         {
             if (reader.TryRead(out var command))
             {
+                using var activity = _ActivitySource.StartActivity(
+                    "NotificationChannel handle exchange",
+                     ActivityKind.Internal,
+                    parentContext: default);
                 try
                 {
                     logger.LogDebug("LogOn:{logOn} Key:{key} Command:{command}", DateTime.Now.ToString("o"), Key, command);
 
                     await using var scope = serviceProvider.CreateAsyncScope();
                     var service = scope.ServiceProvider.GetRequiredService<ICommandService<NotificationCommand>>();
+
                     await service.ExecuteAsync(
                         command: command,
                         cancellationToken: cancellationToken)
