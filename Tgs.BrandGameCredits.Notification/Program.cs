@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 using Microsoft.AspNetCore.Mvc;
-
+using NATS.Client.Core;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -10,6 +10,7 @@ using OpenTelemetry.Trace;
 
 using Tgs.BrandGameCredits.Handler.Common;
 using Tgs.BrandGameCredits.Handler.Messages;
+using Tgs.MessageQueue.Nats.Serializers;
 
 var filterInstrumentations = new[] { "html", "ico", "png", "jpg" };
 
@@ -78,14 +79,15 @@ builder.Services.AddBrandGameCredits(
     });
 
 builder.Services
+    .AddKeyedSingleton("Nats", (sp, _) => new NatsConnection(NatsOpts.Default with
+    {
+        Url = builder.Configuration.GetConnectionString("Nats")!,
+        SerializerRegistry = TgsNatsSerializerRegistration.Default
+    }))
     .AddMessageQueue()
     .AddNatsMessageQueue(config => config
-    .ConfigQueueOptions((options, sp) =>
-    {
-        var configuration = sp.GetRequiredService<IConfiguration>();
-        options.Url = configuration.GetConnectionString("Nats")!;
-    })
-    .AddHandler<NotificationMessageHandler>(BrandGameCreditsHandlerNatsConst.Update, string.Concat(BrandGameCreditsHandlerNatsConst.Update, ".notification"))
+    .ConfigureResolveConnection(sp => sp.GetRequiredKeyedService<NatsConnection>("Nats"))
+    .AddHandler<NotificationMessageHandler>(BrandGameCreditsHandlerNatsConst.Update, typeof(NotificationMessageHandler).FullName!.ToLower())
     .AddHandler<NotificationMessageHandler>("brand.game.credits.notification.manual", "brand.game.credits.notification.manual"))
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange(BrandGameCreditsHandlerNatsConst.Update)

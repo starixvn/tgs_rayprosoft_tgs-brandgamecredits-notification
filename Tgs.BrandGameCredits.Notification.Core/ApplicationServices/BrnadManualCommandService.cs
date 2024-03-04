@@ -33,7 +33,7 @@ internal class BrnadManualCommandService(
 
         await messageSender.PublishAsync(
             subject: "brand.game.credits.notification.manual",
-            data: publish.ToByteArray(),
+            data: publish,
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 

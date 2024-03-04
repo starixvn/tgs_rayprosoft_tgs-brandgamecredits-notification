@@ -1,4 +1,5 @@
-﻿using Tgs.BrandGameCredits.Handler.Common.Protos;
+﻿using NATS.Client.JetStream.Models;
+using Tgs.BrandGameCredits.Handler.Common.Protos;
 using Tgs.BrandGameCredits.Notification.Core;
 using Tgs.BrandGameCredits.Notification.Core.ApplicationServices;
 
@@ -8,23 +9,23 @@ namespace Tgs.BrandGameCredits.Handler.Messages;
 
 public class NotificationMessageHandler(
     ILogger<NotificationMessageHandler> logger,
-    INotificationDispatcher dispatcher) : IMessageHandler
+    INotificationDispatcher dispatcher) : IMessageHandler<BrandGameCreditUpdatePublish>
 {
-    public ValueTask HandleAsync(ReadOnlyMemory<byte> data, CancellationToken cancellationToken = default)
+    public ValueTask HandleAsync(string subject, BrandGameCreditUpdatePublish data, IEnumerable<MessageHeaderValue>? headerValues, CancellationToken cancellationToken = default)
     {
-        var publish = BrandGameCreditUpdatePublish.Parser.ParseFrom(data.Span)
-            ?? throw new NullReferenceException("The request data resolves to a null value");
-
-        logger.LogInformation("LogOn:{logOn} Information publish:{publish}", DateTime.Now.ToString("o"), publish);
+        logger.LogInformation("LogOn:{logOn} Subject:{subject} Message:This receiving message data info.({data})",
+            DateTime.Now.ToString("o"),
+            subject,
+            data);
 
         return dispatcher.PushCommandAsync(
-            command: new NotificationCommand(
-                ResellerId: publish.ResellerId.ToGuid(),
-                ResellerCode: publish.ResellerCode,
-                LicenseeId: publish.LicenseeId.ToGuid(),
-                LicenseeCode: publish.LicenseeCode,
-                BrandId: publish.BrandId.ToGuid(),
-                BrandCode: publish.BrandCode),
+        command: new NotificationCommand(
+                ResellerId: data.ResellerId.ToGuid(),
+                ResellerCode: data.ResellerCode,
+                LicenseeId: data.LicenseeId.ToGuid(),
+                LicenseeCode: data.LicenseeCode,
+                BrandId: data.BrandId.ToGuid(),
+                BrandCode: data.BrandCode),
             cancellationToken: cancellationToken);
     }
 }

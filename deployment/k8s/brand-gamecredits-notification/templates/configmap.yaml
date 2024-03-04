@@ -8,7 +8,8 @@ data:
     {
       "Logging": {
         "LogLevel": {
-          "Default": "Warning"
+          "Default": "Warning",
+          "Tgs.BrandGameCredits.Notification.Messages": "Information"
         }
       },
       "BrandGameCreditsSetting": {
