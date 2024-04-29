@@ -10,12 +10,12 @@ namespace Tgs.BrandGameCredits.Notification.Controllers;
 [ApiController]
 public class BrnadController : ControllerBase
 {
-    [HttpPost]
-    public ValueTask PostA(
-        [FromServices] ICommandService<BrnadManualCommand> service,
-        BrnadViewModel source)
-        => service.ExecuteAsync(
-            command: new BrnadManualCommand(
-                source.BrandCode),
-            cancellationToken: HttpContext.RequestAborted);
+	[HttpPost]
+	public ValueTask PostA(
+		[FromServices] ICommandService<BrnadManualCommand> service,
+		BrnadViewModel source)
+		=> service.ExecuteAsync(
+			command: new BrnadManualCommand(
+				source.BrandCode),
+			cancellationToken: HttpContext.RequestAborted);
 }

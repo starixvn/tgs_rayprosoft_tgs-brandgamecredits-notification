@@ -4,5 +4,5 @@ namespace Tgs.BrandGameCredits.Notification.Core;
 
 public interface INotificationDispatcher
 {
-    ValueTask PushCommandAsync(NotificationCommand command, CancellationToken cancellationToken = default);
+	ValueTask PushCommandAsync(NotificationCommand command, CancellationToken cancellationToken = default);
 }

@@ -2,9 +2,9 @@
 
 public record EmailSettingsOptions
 {
-    public double NotificationLockingSecs { get; set; } = default!;
+	public double NotificationLockingSecs { get; set; } = default!;
 
-    public double EmailLockingHours { get; set; } = default!;
+	public double EmailLockingHours { get; set; } = default!;
 
-    public IEnumerable<string> BlindCarbonCopies { get; set; } = default!;
+	public IEnumerable<string> BlindCarbonCopies { get; set; } = default!;
 }

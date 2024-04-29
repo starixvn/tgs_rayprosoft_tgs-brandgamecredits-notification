@@ -4,6 +4,6 @@ namespace Tgs.BrandGameCredits.Notification.VieModels;
 
 public record BrnadViewModel
 {
-    [Required]
-    public string BrandCode { get; init; } = default!;
+	[Required]
+	public string BrandCode { get; init; } = default!;
 }

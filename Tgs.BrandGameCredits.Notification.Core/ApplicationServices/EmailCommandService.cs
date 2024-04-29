@@ -7,50 +7,50 @@ using Tgs.ServiceUtility;
 namespace Tgs.BrandGameCredits.Notification.Core.ApplicationServices;
 
 internal class EmailCommandService(
-    ILogger<EmailCommandService> logger,
-    IOptions<EmailSettingsOptions> emailSettingsOptions,
-    IEmailLockingRepository lockingRepository,
-    INotificationEmailClient emailClient) : ICommandService<EmailCommand>
+	ILogger<EmailCommandService> logger,
+	IOptions<EmailSettingsOptions> emailSettingsOptions,
+	IEmailLockingRepository lockingRepository,
+	INotificationEmailClient emailClient) : ICommandService<EmailCommand>
 {
-    private readonly EmailSettingsOptions _emailSettingsOptions = emailSettingsOptions.Value;
+	private readonly EmailSettingsOptions _emailSettingsOptions = emailSettingsOptions.Value;
 
-    public async ValueTask ExecuteAsync(EmailCommand command, CancellationToken cancellationToken = default)
-    {
-        if (!await lockingRepository.LockedAsync(
-            code: command.BrandCode,
-            riskType: command.RiskType,
-            cancellationToken: cancellationToken)
-            .ConfigureAwait(false))
-        {
-            logger.LogWarning("LogOn:{logOn}  Message:This {code} notification email has already been sent.",
-                DateTime.Now.ToString("o"),
-                command.BrandCode);
+	public async ValueTask ExecuteAsync(EmailCommand command, CancellationToken cancellationToken = default)
+	{
+		if (!await lockingRepository.LockedAsync(
+			code: command.BrandCode,
+			riskType: command.RiskType,
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false))
+		{
+			logger.LogWarning("LogOn:{logOn}  Message:This {code} notification email has already been sent.",
+				DateTime.Now.ToString("o"),
+				command.BrandCode);
 
-            return;
-        }
+			return;
+		}
 
-        try
-        {
-            await emailClient.PublishTextAsync(
-                recipients: command.Recipients.ToArray(),
-                subject: command.Subject,
-                content: command.Content,
-                carbonCopies: Enumerable.Empty<string>(),
-                blindCarbonCopies: _emailSettingsOptions.BlindCarbonCopies,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "LogOn:{logOn}  Message:This {code} email failed to be sent.",
-                DateTime.Now.ToString("o"),
-                command.BrandCode);
+		try
+		{
+			await emailClient.PublishTextAsync(
+				recipients: command.Recipients.ToArray(),
+				subject: command.Subject,
+				content: command.Content,
+				carbonCopies: Enumerable.Empty<string>(),
+				blindCarbonCopies: _emailSettingsOptions.BlindCarbonCopies,
+				cancellationToken: cancellationToken)
+				.ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			logger.LogError(ex, "LogOn:{logOn}  Message:This {code} email failed to be sent.",
+				DateTime.Now.ToString("o"),
+				command.BrandCode);
 
-            await lockingRepository.UnlockAsync(
-                code: command.BrandCode,
-                riskType: command.RiskType,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-    }
+			await lockingRepository.UnlockAsync(
+				code: command.BrandCode,
+				riskType: command.RiskType,
+				cancellationToken: cancellationToken)
+				.ConfigureAwait(false);
+		}
+	}
 }
