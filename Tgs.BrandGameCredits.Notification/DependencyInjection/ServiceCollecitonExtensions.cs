@@ -13,7 +13,6 @@ public static class ServiceCollecitonExtensions
 		Action<RedisOptions, IServiceProvider> redisOptions,
 		Action<BrandGameCreditsClientOptions, IServiceProvider> brandGameCreditsClientOptions,
 		Action<NotificationContactsClientOptions, IServiceProvider> notificationContactsClientOptions,
-		Action<NotificationEmailClientOptions, IServiceProvider> notificationEmailClientOptions,
 		Action<EmailSettingsOptions, IServiceProvider> emailSettingsOptions)
 		=> services
 		.AddOptions<RedisOptions>()
@@ -25,7 +24,6 @@ public static class ServiceCollecitonExtensions
 		.AddSingleton<RedisConnectionManager>()
 		.AddBrandGameCreditsClient(brandGameCreditsClientOptions)
 		.AddNotificationContactsClient(notificationContactsClientOptions)
-		.AddNotificationEmailClient(notificationEmailClientOptions)
 		.AddBrandGameCreditsCore()
 		.AddBrandGameCreditsRepositories(redisDatabaseResolver: (sp) => sp.GetRequiredService<RedisConnectionManager>().Database);
 }

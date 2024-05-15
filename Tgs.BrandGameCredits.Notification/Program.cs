@@ -67,13 +67,13 @@ builder.Services.AddBrandGameCredits(
 	(options, sp) =>
 	{
 		var configuration = sp.GetRequiredService<IConfiguration>();
-		options.BaseUrl = configuration.GetValue<Uri>("BrandGameCreditsSetting:NotificationEmailClientBaseUrl")!;
-	},
-	(options, sp) =>
-	{
-		var configuration = sp.GetRequiredService<IConfiguration>();
 		configuration.GetSection("EmailSettings").Bind(options);
-	});
+	})
+	.AddNotificationEmailClient(httpClientBuilder => httpClientBuilder.ConfigureHttpClient((sp, http) =>
+	{
+		var config = sp.GetRequiredService<IConfiguration>();
+		http.BaseAddress = config.GetValue<Uri>("BrandGameCreditsSetting:NotificationEmailClientBaseUrl");
+	}));
 
 builder.Services
 	.AddKeyedSingleton("Nats", (sp, _) => new NatsConnection(NatsOpts.Default with
