@@ -34,14 +34,14 @@ public class ContactsCommandSerivceUnitTest
 			LicenseeCode: "TGS",
 			BrandId: Guid.Parse("4e86719f-243f-46f6-b010-5c758b7285af"),
 			BrandCode: "GPI",
-			Contacts: new EmailContact[]
-			{
+			Contacts:
+			[
 				new() {
 					Name="tst",
 					Email="tst@rayprosoft.com",
 					Remark="tst"
 				}
-			});
+			]);
 		_ = fakeNotificationContactsClient.EmailBrandGetAsync(
 			code: Arg.Is(command.BrandCode),
 			cancellationToken: Arg.Any<CancellationToken>())
@@ -54,14 +54,14 @@ public class ContactsCommandSerivceUnitTest
 			LicenseeCode: "TGS",
 			BrandId: Guid.Empty,
 			BrandCode: string.Empty,
-			Contacts: new EmailContact[]
-			{
+			Contacts:
+			[
 				new() {
 					Name="tst",
 					Email="tst@rayprosoft.com",
 					Remark="tst"
 				}
-			});
+			]);
 		_ = fakeNotificationContactsClient.EmailLicenseeGetAsync(
 			code: Arg.Is(command.LicenseeCode),
 			cancellationToken: Arg.Any<CancellationToken>())
@@ -74,14 +74,14 @@ public class ContactsCommandSerivceUnitTest
 			LicenseeCode: string.Empty,
 			BrandId: Guid.Empty,
 			BrandCode: string.Empty,
-			Contacts: new EmailContact[]
-			{
+			Contacts:
+			[
 				new() {
 					Name="tst",
 					Email="tst@rayprosoft.com",
 					Remark="tst"
 				}
-			});
+			]);
 		_ = fakeNotificationContactsClient.EmailResellerGetAsync(
 			code: Arg.Is(command.ResellerCode),
 			cancellationToken: Arg.Any<CancellationToken>())

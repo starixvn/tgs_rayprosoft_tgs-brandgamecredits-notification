@@ -35,7 +35,7 @@ internal class EmailCommandService(
 				recipients: command.Recipients.ToArray(),
 				subject: command.Subject,
 				content: command.Content,
-				carbonCopies: Enumerable.Empty<string>(),
+				carbonCopies: [],
 				blindCarbonCopies: _emailSettingsOptions.BlindCarbonCopies,
 				cancellationToken: cancellationToken)
 				.ConfigureAwait(false);

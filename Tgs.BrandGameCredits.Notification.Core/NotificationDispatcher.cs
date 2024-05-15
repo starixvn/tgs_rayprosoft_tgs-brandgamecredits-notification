@@ -38,7 +38,7 @@ internal class NotificationDispatcher(IServiceProvider serviceProvider) : INotif
 	{
 		using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationTokenSource.Token);
 
-		var key = string.Join('-', new string[] { command.ResellerCode, command.LicenseeCode, command.BrandCode });
+		var key = string.Join('-', [command.ResellerCode, command.LicenseeCode, command.BrandCode]);
 		if (!_counters.TryGetValue(key, out NotificationChannel? channel))
 		{
 			await InitAsync(
